@@ -34,7 +34,7 @@ describe("telescope_cycler", function()
             { picker_opts = "picker4" },
         }
 
-        cycler = telescope_cycler:new({
+        cycler = telescope_cycler.new({
             pickers = {
                 {
                     name = "picker1",
@@ -120,7 +120,7 @@ describe("telescope_cycler", function()
             assert.is_true(ret)
         end)
 
-        it("SHOULD call the original 'attach_mappings'", function()
+        it("SHOULD call the original attach_mappings", function()
             local map = function() end
             local prompt_bufnr = 1
 
@@ -132,7 +132,7 @@ describe("telescope_cycler", function()
             assert.stub(picker_opts[3].attach_mappings).was_called_with(prompt_bufnr, map)
         end)
 
-        it("SHOULD return the same value as the original 'attach_mappings'", function()
+        it("SHOULD return the same value as the original attach_mappings", function()
             local prompt_bufnr = 1
 
             cycler("picker3")
