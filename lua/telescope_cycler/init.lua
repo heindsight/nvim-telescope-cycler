@@ -1,4 +1,4 @@
-local actions = require "telescope.actions"
+local actions = require("telescope.actions")
 
 local Cycle = require("telescope_cycler.util.cycle")
 
@@ -17,16 +17,16 @@ local TCycler = {}
 --          (default: {next = '<C-l>', prev = '<C-h>'})
 function TCycler:new(opts)
     opts = opts or {}
-    vim.validate {
+    vim.validate({
         pickers = { opts.pickers, "t" },
         mappings = { opts.mappings, "t", true },
-    }
+    })
     for _, picker_cfg in ipairs(opts.pickers) do
-        vim.validate {
+        vim.validate({
             name = { picker_cfg.name, "string" },
             picker = { picker_cfg.picker, "function" },
             opts = { picker_cfg.opts, "table", true },
-        }
+        })
     end
 
     opts.mappings = opts.mappings or {}

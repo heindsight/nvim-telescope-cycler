@@ -5,7 +5,7 @@ function Cycle:new(values)
         _values = values,
         _index = 0,
     }
-    return setmetatable(cycle, {__index = self})
+    return setmetatable(cycle, { __index = self })
 end
 
 function Cycle:skip_until(predicate)

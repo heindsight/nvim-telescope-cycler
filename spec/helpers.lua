@@ -1,5 +1,5 @@
 local assert = require("luassert")
-local assert_util = require "luassert.util"
+local assert_util = require("luassert.util")
 
 -- Match an argument table that is a superset of the given table.
 local function table_containing(_, arguments)

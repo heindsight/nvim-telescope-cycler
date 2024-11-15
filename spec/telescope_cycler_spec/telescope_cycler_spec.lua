@@ -34,31 +34,38 @@ describe("telescope_cycler", function()
             { picker_opts = "picker4" },
         }
 
-
-        cycler = telescope_cycler:new {
+        cycler = telescope_cycler:new({
             pickers = {
                 {
                     name = "picker1",
-                    picker = function(opts) picker_stubs[1](opts) end,
-                    opts = picker_opts[1]
+                    picker = function(opts)
+                        picker_stubs[1](opts)
+                    end,
+                    opts = picker_opts[1],
                 },
                 {
                     name = "picker2",
-                    picker = function(opts) picker_stubs[2](opts) end,
-                    opts = picker_opts[2]
+                    picker = function(opts)
+                        picker_stubs[2](opts)
+                    end,
+                    opts = picker_opts[2],
                 },
                 {
                     name = "picker3",
-                    picker = function(opts) picker_stubs[3](opts) end,
-                    opts = picker_opts[3]
+                    picker = function(opts)
+                        picker_stubs[3](opts)
+                    end,
+                    opts = picker_opts[3],
                 },
                 {
                     name = "picker4",
-                    picker = function(opts) picker_stubs[4](opts) end,
-                    opts = picker_opts[4]
+                    picker = function(opts)
+                        picker_stubs[4](opts)
+                    end,
+                    opts = picker_opts[4],
                 },
-            }
-        }
+            },
+        })
     end)
 
     after_each(function()
@@ -95,8 +102,12 @@ describe("telescope_cycler", function()
 
             opts.attach_mappings(prompt_bufnr, map)
 
-            assert.stub(map).was_called_with({ "i", "n" }, "<C-l>", match.is_function(), { desc = "cycle to next picker" })
-            assert.stub(map).was_called_with({ "i", "n" }, "<C-h>", match.is_function(), { desc = "cycle to previous picker" })
+            assert
+                .stub(map)
+                .was_called_with({ "i", "n" }, "<C-l>", match.is_function(), { desc = "cycle to next picker" })
+            assert
+                .stub(map)
+                .was_called_with({ "i", "n" }, "<C-h>", match.is_function(), { desc = "cycle to previous picker" })
         end)
 
         it("SHOULD return true", function()
@@ -104,7 +115,7 @@ describe("telescope_cycler", function()
             local opts = picker_stubs[1].calls[1].refs[1]
             local prompt_bufnr = 1
 
-            local ret = opts.attach_mappings(prompt_bufnr, function(...) end)
+            local ret = opts.attach_mappings(prompt_bufnr, function() end)
 
             assert.is_true(ret)
         end)
@@ -147,7 +158,6 @@ describe("telescope_cycler", function()
 
                 assert.stub(picker_stubs[2]).was_called_with(match.table_containing(picker_opts[2]))
             end)
-
 
             it("SHOULD wrap when calling next", function()
                 local map = stub.new()
@@ -221,6 +231,5 @@ describe("telescope_cycler", function()
                 assert.stub(close_action).was_called_with(prompt_bufnr)
             end)
         end)
-
     end)
 end)
