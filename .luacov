@@ -1,0 +1,33 @@
+-- Include telescope_cycler modules in coverage report
+modules = {
+    ["telescope_cycler"] = "lua/telescope_cycler/init.lua",
+    ["telescope_cycler.*"] = "lua",
+    ["telescope_cycler.*.*"] = "lua/",
+}
+
+-- Include spec modules in coverage report
+include = {
+    "spec",
+}
+
+-- Exclude fixtures and spec helpers from coverage report
+exclude = {
+    ".luarocks",
+    "lua_modules",
+    "spec.helpers",
+    "vim",
+}
+
+-- Include files not loaded in tests in coverage report
+includeuntestedfiles = true
+
+-- Run reporter on test-run completion
+runreport = true
+
+-- The luacov on_exit gc trick doesn't work with nlua
+-- and nlua doesn't call os.exit, so we need to enable
+-- `tick` to output stats.
+tick = true
+savestepsize = 1
+
+-- vim:ft=lua

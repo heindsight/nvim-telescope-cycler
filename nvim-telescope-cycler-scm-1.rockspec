@@ -20,6 +20,9 @@ dependencies = {
 
 test_dependencies = {
     'lua == 5.1',
+    'luacheck',
+    'luacov',
+    'luacov-cobertura',
     'nlua',
     'busted',
 }
