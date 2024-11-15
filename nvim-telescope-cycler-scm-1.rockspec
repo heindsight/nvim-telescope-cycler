@@ -18,6 +18,12 @@ dependencies = {
     'telescope.nvim',
 }
 
+test_dependencies = {
+    'lua == 5.1',
+    'nlua',
+    'busted',
+}
+
 build = {
     type = 'builtin',
 }
