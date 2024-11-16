@@ -1,6 +1,6 @@
 local actions = require("telescope.actions")
 
-local TCycler = {}
+local cycler = {}
 
 --- Create a new Telescope Cycler instance
 --
@@ -18,7 +18,7 @@ local TCycler = {}
 -- @return (function(string?):any) [[ a function that will launch a picker identified by name
 --  (or the first picker if no name is provided)
 -- ]]
-function TCycler.new(params)
+function cycler.new(params)
     params = params or {}
     vim.validate({
         pickers = { params.pickers, "table" },
@@ -82,4 +82,4 @@ function TCycler.new(params)
     return launch_picker
 end
 
-return TCycler
+return cycler
