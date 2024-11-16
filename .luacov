@@ -19,8 +19,8 @@ exclude = {
 -- Include files not loaded in tests in coverage report
 includeuntestedfiles = true
 
--- Run reporter on test-run completion
-runreport = true
+-- Delete the stats file after generating the report
+deletestats = true
 
 -- The luacov on_exit gc trick doesn't work with nlua
 -- and nlua doesn't call os.exit, so we need to enable
