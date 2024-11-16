@@ -1,4 +1,8 @@
-.PHONY: clean coverage coverage-report format lint spec
+.PHONY: clean coverage coverage-report format init_devenv lint spec
+
+init_devenv:
+	@luarocks --local --lua-version=5.1 init --no-gitignore
+
 
 lint:
 	luacheck lua/ spec/
