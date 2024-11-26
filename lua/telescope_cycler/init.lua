@@ -1,30 +1,54 @@
+-- Telescope Cycler
+--
+-- Cycle through telescope.nvim picker_cfgs.
+--
+-- This module provides a way to cycle through a list of telescope picker_cfgs. It sets telescope key mappings to
+-- switch to the next (default: <C-l>) or previous (default <C-h>) picker in the list.
+--
+-- Example:
+--
+--  ```lua
+--  local telescope_builtin = require('telescope.builtin')
+--  local telescope_cycler = require("telescope_cycler")
+--  local cycler = telescope_cycler.new({
+--      {
+--          { name = "Find files",   picker = telescope_builtin.find_files, opts = { hidden = true } },
+--          { name = "Buffers",      picker = telescope_builtin.buffers },
+--          { name = "Recent files", picker = telescope_builtin.oldfiles },
+--          { name = "Live grep",    picker = telescope_builtin.live_grep },
+--      },
+--      { next = "<C-l>", prev = "<C-h>" },
+--  })
+
+--  vim.keymap.set('n', '<leader>f', cycler, { desc = 'Telescope' })
+--  ```
+
 local actions = require("telescope.actions")
 
-local cycler = {}
+local M = {}
 
---- Create a new Telescope Cycler instance
+
+-- Create a new Telescope Cycler instance
 --
--- @param params (table) cycler config
--- @field pickers: (table[]) [[ A list of picker configurations to cycle through.
---  Each element should be a table with the following fields:
---    name: (string) a name to identify a picker,
---    picker: (function) a function to launch the picker,
---    opts: (table?) options to pass to the picker (default: {}),
--- ]]
--- @field mappings: (table?) [[ Keys to map to cycle to next/previous pickers:
---    next: (string) key to map to cycle to the next picker (default: '<C-l>'),
---    prev: (string) key to map to cycle to the previous picker (default: '<C-h>'),
--- ]]
--- @return (function(string?):any) [[ a function that will launch a picker identified by name
---  (or the first picker if no name is provided)
--- ]]
-function cycler.new(params)
-    params = params or {}
+-- Parameters:
+--      {picker_cfgs} (table[]) A list of picker configurations to cycle through. Each should have the following fields:
+--          - {name} (string) A name to identify the picker
+--          - {picker} (function) A function to launch the picker
+--          - {opts} (table?) Options to pass to the picker
+--      {mappings} (table?) Keys to map to cycle to next/previous picker:
+--          - {next} (string?) Key to map to cycle to the next picker (default: <C-l>)
+--          - {prev} (string?) Key to map to cycle to the previous picker (default: <C-h>)
+--          Note that the same keys are mapped in both normal and insert mode.
+--
+--  Return:
+--      (function(name: string?)) function to launch a picker. Accepts an optional name parameter
+--      to launch a specific picker, otherwise the first picker in the `picker_cfgs` list will be used.
+function M.new(picker_cfgs, mappings)
     vim.validate({
-        pickers = { params.pickers, "table" },
-        mappings = { params.mappings, "table", true },
+        picker_cfgs = { picker_cfgs, "table" },
+        mappings = { mappings, "table", true },
     })
-    for _, picker_cfg in ipairs(params.pickers) do
+    for _, picker_cfg in ipairs(picker_cfgs) do
         vim.validate({
             name = { picker_cfg.name, "string" },
             picker = { picker_cfg.picker, "function" },
@@ -32,16 +56,17 @@ function cycler.new(params)
         })
     end
 
-    local mappings = vim.tbl_extend("force", { next = "<C-l>", prev = "<C-h>" }, params.mappings or {})
+    mappings = vim.tbl_extend("force", { next = "<C-l>", prev = "<C-h>" }, mappings or {})
     vim.validate({
         next = { mappings.next, "string" },
         prev = { mappings.prev, "string" },
     })
 
     local pickers = {}
+    local default_picker = picker_cfgs[1].name
 
     local function launch_picker(name)
-        name = name or params.pickers[1].name
+        name = name or default_picker
 
         local picker_cfg = pickers[name]
         if picker_cfg == nil then
@@ -49,12 +74,12 @@ function cycler.new(params)
             return
         end
 
-        return picker_cfg.picker(picker_cfg.opts)
+        picker_cfg.picker(picker_cfg.opts)
     end
 
-    for i, picker_cfg in ipairs(params.pickers) do
-        local next = params.pickers[i + 1] or params.pickers[1]
-        local prev = params.pickers[i - 1] or params.pickers[#params.pickers]
+    for i, picker_cfg in ipairs(picker_cfgs) do
+        local next = picker_cfgs[i + 1] or picker_cfgs[1]
+        local prev = picker_cfgs[i - 1] or picker_cfgs[#picker_cfgs]
         local orig_attach_mappings = picker_cfg.opts.attach_mappings
 
         pickers[picker_cfg.name] = {
@@ -82,4 +107,5 @@ function cycler.new(params)
     return launch_picker
 end
 
-return cycler
+
+return M

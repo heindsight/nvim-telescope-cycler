@@ -34,8 +34,8 @@ describe("telescope_cycler", function()
             { picker_opts = "picker4" },
         }
 
-        cycler = telescope_cycler.new({
-            pickers = {
+        cycler = telescope_cycler.new(
+            {
                 {
                     name = "picker1",
                     picker = function(opts)
@@ -64,8 +64,8 @@ describe("telescope_cycler", function()
                     end,
                     opts = picker_opts[4],
                 },
-            },
-        })
+            }
+        )
     end)
 
     after_each(function()
