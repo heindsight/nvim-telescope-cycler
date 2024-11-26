@@ -1,4 +1,4 @@
-.PHONY: clean coverage coverage-report format init_devenv lint spec
+.PHONY: clean cobertura coverage coverage-report format init_devenv lint spec
 
 init_devenv:
 	@luarocks --local --lua-version=5.1 init --no-gitignore
@@ -24,6 +24,10 @@ coverage-report:
 
 
 coverage: spec coverage-report
+
+
+cobertura:
+	@luacov-cobertura -o coverage.xml
 
 
 clean:
