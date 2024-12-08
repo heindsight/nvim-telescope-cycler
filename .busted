@@ -3,5 +3,6 @@ return {
     coverage = true,
     lpath = "lua/?.lua;lua/?/init.lua",
     lua = "nlua",
+    verbose = true,
   },
 }
