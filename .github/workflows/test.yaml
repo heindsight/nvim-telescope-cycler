@@ -17,24 +17,26 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: rhysd/action-setup-vim@v1
+      - name: Install neovim
+        uses: rhysd/action-setup-vim@v1
         with:
           neovim: true
 
       - name: Install MSVC Dev env
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Setup lua
+      - name: Install lua
         uses: luarocks/gh-actions-lua@v10
         with:
           luaVersion: "5.1"
 
-      - name: Setup luarocks
+      - name: Install luarocks
         uses: luarocks/gh-actions-luarocks@v5
 
-      - name: run tests
+      - name: Run tests
         run: make spec
 
       - name: Generate cobertura coverage report
