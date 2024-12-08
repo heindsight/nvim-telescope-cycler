@@ -80,12 +80,13 @@ function M.new(picker_cfgs, mappings)
     for i, picker_cfg in ipairs(picker_cfgs) do
         local next = picker_cfgs[i + 1] or picker_cfgs[1]
         local prev = picker_cfgs[i - 1] or picker_cfgs[#picker_cfgs]
-        local orig_attach_mappings = picker_cfg.opts.attach_mappings
+        local opts = picker_cfg.opts or {}
+        local orig_attach_mappings = opts.attach_mappings
 
         pickers[picker_cfg.name] = {
             name = picker_cfg.name,
             picker = picker_cfg.picker,
-            opts = vim.deepcopy(picker_cfg.opts or {}),
+            opts = vim.deepcopy(opts),
         }
 
         pickers[picker_cfg.name].opts.attach_mappings = function(prompt_bufnr, map)

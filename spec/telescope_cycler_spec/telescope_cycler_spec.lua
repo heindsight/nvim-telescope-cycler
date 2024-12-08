@@ -31,7 +31,6 @@ describe("telescope_cycler", function()
             { picker_opts = "picker1" },
             { picker_opts = "picker2" },
             { picker_opts = "picker3", attach_mappings = stub.new() },
-            { picker_opts = "picker4" },
         }
 
         cycler = telescope_cycler.new(
@@ -62,7 +61,6 @@ describe("telescope_cycler", function()
                     picker = function(opts)
                         picker_stubs[4](opts)
                     end,
-                    opts = picker_opts[4],
                 },
             }
         )
@@ -214,7 +212,7 @@ describe("telescope_cycler", function()
 
                 prev_action(prompt_bufnr)
 
-                assert.stub(picker_stubs[4]).was_called_with(match.table_containing(picker_opts[4]))
+                assert.stub(picker_stubs[4]).was_called()
             end)
 
             it("SHOULD call the close action", function()
