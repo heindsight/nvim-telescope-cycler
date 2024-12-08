@@ -23,6 +23,9 @@ jobs:
         with:
           neovim: true
 
+      - name: Install MSVC Dev env
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Setup lua
         uses: luarocks/gh-actions-lua@v10
         with:
