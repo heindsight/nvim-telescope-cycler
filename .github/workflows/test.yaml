@@ -1,0 +1,58 @@
+---
+name: test
+
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    permissions:
+      issues: write
+      checks: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+
+      - name: Install MSVC Dev env
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Install lua
+        uses: luarocks/gh-actions-lua@v10
+        with:
+          luaVersion: "5.1"
+
+      - name: Install luarocks
+        uses: luarocks/gh-actions-luarocks@v5
+
+      - name: Run tests
+        run: make spec
+
+      - name: Generate cobertura coverage report
+        if: matrix.os == 'ubuntu-latest'
+        run: make cobertura
+
+      - name: Upload coverage report
+        uses: 5monkeys/cobertura-action@v14
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          path: coverage.xml
+          skip_covered: false
+          minimum_coverage: 100
+          fail_below_threshold: true
+          show_line: true
+...

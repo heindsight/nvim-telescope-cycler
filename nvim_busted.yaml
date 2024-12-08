@@ -1,0 +1,71 @@
+---
+# Selene standard library configuration for neovim with busted tests
+
+# Extend the lua51 configuration
+base: lua51
+
+globals:
+  # neovim "standard library" functions and constants
+  vim.validate:
+    args:
+      - type: table
+  vim.deepcopy:
+    args:
+      - type: table
+      - type: bool
+        required: false
+  vim.tbl_extend:
+    args:
+      - type: string
+      - type: table
+      - type: table
+  vim.notify:
+    args:
+      - type: string
+      - type: string
+        required: false
+      - type: table
+        required: false
+  vim.log.levels.ERROR:
+    property: read-only
+
+  # busted functions
+  describe:
+    args:
+      - type: string
+      - type: function
+  it:
+    args:
+      - type: string
+      - type: function
+  setup:
+    args:
+      - type: function
+  teardown:
+    args:
+      - type: function
+  before_each:
+    args:
+      - type: function
+  after_each:
+    args:
+      - type: function
+
+  # luassert functions
+  assert.are.same:
+    args:
+      - type: any
+      - type: any
+  assert.is_true:
+    args:
+      - type: any
+  assert.is_false:
+    args:
+      - type: any
+  assert.is_nil:
+    args:
+      - type: any
+  assert.stub:
+    args:
+      - type: any
+
