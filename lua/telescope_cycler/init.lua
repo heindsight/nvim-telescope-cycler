@@ -10,7 +10,7 @@
 --  ```lua
 --  local telescope_builtin = require('telescope.builtin')
 --  local telescope_cycler = require("telescope_cycler")
---  local cycler = telescope_cycler.new({
+--  local cycler = telescope_cycler.new(
 --      {
 --          { name = "Find files",   picker = telescope_builtin.find_files, opts = { hidden = true } },
 --          { name = "Buffers",      picker = telescope_builtin.buffers },
@@ -18,7 +18,7 @@
 --          { name = "Live grep",    picker = telescope_builtin.live_grep },
 --      },
 --      { next = "<C-l>", prev = "<C-h>" },
---  })
+--  )
 
 --  vim.keymap.set('n', '<leader>f', cycler, { desc = 'Telescope' })
 --  ```

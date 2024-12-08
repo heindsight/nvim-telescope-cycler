@@ -1,0 +1,54 @@
+*telescope_cycler.nvim*  Cycle through telescope pickers
+
+This plugin provides a mechanism to cycle through a list of telescope picker
+configurations.
+
+
+telescope-cycler.new({pickers}, {opts})               *telescope-cycler.new()*
+    Create a new telescope cycler instance.
+
+    Parameters: ~
+      • {pickers_cfgs}  (`table[]`) A list of telescope picker configurations.
+                        Each element is a table with the following keys:
+                        • {name} (`string`) The name that can be used to
+                          reference the picker.
+                        • {picker} (`function`) A function to launch the picker.
+                        • {opts} (`table?`) Options to pass to the picker
+                          function. 
+      • {mappings}      (`table?`) Keys to map for switching to the next or
+                        previous picker. Accepted keys are:
+                        • {next} (`string?`) The key to switch to the next
+                          picker (default: <C-l>).
+                        • {prev} (`string?`) The key to switch to the previous
+                          picker (default: <C-n>).
+                        Note that the same keys are mapped in both normal and
+                        insert mode.
+
+    Return: ~
+      • (`function(name: string?)`) A function to launch a picker from the
+        `picker_cfgs` list by name. If no name is provided, the first picker
+        in the list is launched. The keys configured in `mappings` are mapped
+        to switch to the next/previous picker in the list.
+
+    Example: ~
+    >lua
+        local cycler = telescope_cycler.new(
+            {
+                {
+                    name = "Find files",
+                    picker = telescope_builtin.find_files,
+                    opts = { hidden = true }
+                },
+                { name = "Buffers",      picker = telescope_builtin.buffers },
+                { name = "Old files", picker = telescope_builtin.oldfiles },
+            },
+            { next = '<C-n>', prev = '<C-p>' }
+        )
+        vim.keymap.set('n', '<leader>f', cycler, { desc = 'Telescope' })
+<
+    The above example maps <leader>f to launch telescope with the "Find files"
+    picker (with `options` set to `{ hidden = true }`). The <C-n> and <C-p>
+    keys will be mapped to switch to the next/previous pickers amongst "Find
+    Files", "Buffers", and "Old files".
+
+ vim:tw=78:ts=8:sw=4:sts=4:et:ft=help:norl:
