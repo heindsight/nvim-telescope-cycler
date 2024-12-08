@@ -52,4 +52,6 @@ jobs:
           minimum_coverage: 100
           fail_below_threshold: true
           show_line: true
+        permissions:
+          pull_requests: write
 ...
