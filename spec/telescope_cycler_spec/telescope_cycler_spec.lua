@@ -33,37 +33,35 @@ describe("telescope_cycler", function()
             { picker_opts = "picker3", attach_mappings = stub.new() },
         }
 
-        cycler = telescope_cycler.new(
+        cycler = telescope_cycler.new({
             {
-                {
-                    name = "picker1",
-                    picker = function(opts)
-                        picker_stubs[1](opts)
-                    end,
-                    opts = picker_opts[1],
-                },
-                {
-                    name = "picker2",
-                    picker = function(opts)
-                        picker_stubs[2](opts)
-                    end,
-                    opts = picker_opts[2],
-                },
-                {
-                    name = "picker3",
-                    picker = function(opts)
-                        picker_stubs[3](opts)
-                    end,
-                    opts = picker_opts[3],
-                },
-                {
-                    name = "picker4",
-                    picker = function(opts)
-                        picker_stubs[4](opts)
-                    end,
-                },
-            }
-        )
+                name = "picker1",
+                picker = function(opts)
+                    picker_stubs[1](opts)
+                end,
+                opts = picker_opts[1],
+            },
+            {
+                name = "picker2",
+                picker = function(opts)
+                    picker_stubs[2](opts)
+                end,
+                opts = picker_opts[2],
+            },
+            {
+                name = "picker3",
+                picker = function(opts)
+                    picker_stubs[3](opts)
+                end,
+                opts = picker_opts[3],
+            },
+            {
+                name = "picker4",
+                picker = function(opts)
+                    picker_stubs[4](opts)
+                end,
+            },
+        })
     end)
 
     after_each(function()

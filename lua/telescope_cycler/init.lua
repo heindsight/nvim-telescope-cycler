@@ -27,7 +27,6 @@ local actions = require("telescope.actions")
 
 local M = {}
 
-
 -- Create a new Telescope Cycler instance
 --
 -- Parameters:
@@ -107,6 +106,5 @@ function M.new(picker_cfgs, mappings)
 
     return launch_picker
 end
-
 
 return M
