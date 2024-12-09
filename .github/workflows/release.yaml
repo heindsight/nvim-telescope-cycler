@@ -9,6 +9,7 @@ jobs:
   luarocks-release:
     runs-on: ubuntu-latest
     name: Luarocks Release
+    environment: Luarocks
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
