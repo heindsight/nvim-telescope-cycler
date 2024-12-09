@@ -2,3 +2,6 @@
 /lua_modules
 /.luarocks
 luacov.*
+coverage.xml
+doc/tags
+/tags

@@ -17,8 +17,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     permissions:
-      issues: write
       checks: write
+      issues: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
