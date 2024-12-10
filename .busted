@@ -2,7 +2,7 @@ return {
   _all = {
     coverage = true,
     lpath = "lua/?.lua;lua/?/init.lua",
-    lua = "nlua",
+    lua = [[nlua -e 'vim.o.rtp = "."']],
     verbose = true,
   },
 }
