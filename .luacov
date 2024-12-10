@@ -1,13 +1,3 @@
--- Include telescope_cycler modules in coverage report
-modules = {
-    ["telescope_cycler"] = "lua/telescope_cycler/init.lua",
-}
-
--- Include spec modules in coverage report
-include = {
-    "spec",
-}
-
 -- Exclude fixtures and spec helpers from coverage report
 exclude = {
     ".luarocks",
